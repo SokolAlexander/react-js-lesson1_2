@@ -1,120 +1,81 @@
 import React, { useEffect, useState, useCallback } from "react";
 
-import Child from './child';
+import Message from "./message";
+import Input from "./input";
 import "./app.scss";
 
-// const App = (props) => {
-//   const [counter, setCounter] = useState(0);
+// export default class App extends React.Component {
+//   state = {
+//     messages: [{ text: 'message1', author: 'me' }, { text: 'message2', author: 'me' }]
+//   }
 
-//   useEffect(() => {
-//     console.log('----didMount');
-//   }, []);
+//   componentWillUnmount() {
+//     clearTimeout(this.timeout);
+//   }
 
-//   useEffect(() => {
-//     console.log("----didUpdate");
-//   });
+//   componentDidUpdate(prevProps, prevState) {
+//     const lastAuthor = this.state.messages[this.state.messages.length - 1].author;
 
-//   useEffect(() => {
-//     return () => {
-//       console.log('-----willUnmount')
+//     if (prevState.messages.length < this.state.messages.length && lastAuthor !== 'robot') {
+//       this.timeout = setTimeout(() => {
+//         this.handleAddMessage('Im a robot', 'robot');
+//       }, 1500);
 //     }
-//   }, []);
+//   }
 
-//   const update = useCallback(() => {
-//     setCounter(counter + 1);
-//   }, [counter]);
+//   renderMessage = (message, i) => {
+//     return (
+//       <Message message={message} key={i} />
+//     )
+//   }
 
-//   return (
-//       <div className="full-screen">
-//         <div>
-//           <h1>React Page </h1>
-//           <br />
-//           <a
-//             className="button-line"
-//             href="https://medium.com/javascript-in-plain-english/webpack-and-babel-setup-with-react-from-scratch-bef0fe2ae3e7"
-//             target="_blank"
-//           >
-//             Know more
-//           </a>
-//         </div>
-//         <Child counter={counter} />
-//         {/* <Child counter={1} /> */}
+//   handleAddMessage = (text, author = 'me') => {
+//     this.setState(state => ({
+//       messages: [...state.messages, {text, author}]
+//     }));
+//   }
 
-//         <div onClick={update}>UPDATE</div>
-//       </div>
-//   );
-// };
+//   render() {
+//     return (
+//       <>
+//         {this.state.messages.map(this.renderMessage)}
+//         <Input onAddMessage={this.handleAddMessage} />
+//       </>
+//     );
+//   }
+// }
 
-// export default App;
+export default function App() {
+  const [messages, setMessages] = useState([
+    { text: "message1", author: "me" },
+    { text: "message2", author: "me" },
+  ]);
 
-export default class App extends React.Component {
-  constructor(props) {
-    super(props);
-    console.log("------------constructor");
-    this.state = {
-      messages: {
-        id1: {
-          author: 'Me',
-          text: 'Text'
-        }
-      }
+  const renderMessage = useCallback((message, i) => {
+    return <Message message={message} key={i} />;
+  }, []);
+
+  const handleAddMessage = useCallback((text, author = "me") => {
+    setMessages((oldMessages) => ([...oldMessages, { text, author }]));
+  }, []);
+
+  useEffect(() => {
+    let timeout;
+    if (messages[messages.length - 1].author !== 'robot') {
+      timeout = setTimeout(() => {
+        handleAddMessage('some answer', 'robot')
+      }, 1500);
     }
-  }
 
-  static getDerivedStateFromProps(props, state) {
-    console.log('---------------getDerivedStateFromProps');
-    return state;
-  }
-
-  componentDidMount() {
-    console.log("------------didMount");
-  }
-
-  shouldComponentUpdate() {
-    console.log('----------shouldComponentUpdate');
-    return true;
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.counter !== this.state.counter) {
-      console.log('------------didUpdate');
+    return () => {
+      clearTimeout(timeout);
     }
-  }
+  }, [messages, handleAddMessage]);
 
-  componentWillUnmount() {
-    console.log('--------willUnmount');
-  }
-
-  render() {
-    console.log("--------------render");
-
-    return (
-      <div className="full-screen">
-        <div>
-          <h1>React e </h1>
-          <br />
-          <a
-            className="button-line"
-            href="https://medium.com/javascript-in-plain-english/webpack-and-babel-setup-with-react-from-scratch-bef0fe2ae3e7"
-            target="_blank"
-          >
-            Know more
-          </a>
-        </div>
-        <Child counter={this.state.counter} />
-        <Child counter={1} />
-
-        <div onClick={this.update}>UPDATE</div>
-      </div>
-    );
-  }
-
-  update = () => {
-    this.setState(({counter}) => ({counter: counter + 1}));
-    const newObj = {...this.state.obj};
-    newObj.somekey = '23';
-    this.setState({
-      obj: newObj
-    });
-  }
+  return (
+    <>
+      {messages.map(renderMessage)}
+      <Input onAddMessage={handleAddMessage} />
+    </>
+  );
 }
