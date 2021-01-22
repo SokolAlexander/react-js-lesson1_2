@@ -1,0 +1,24 @@
+.genButton {
+  width: 120px;
+  height: 50px;
+  font-weight: bold;
+  background-color: burlywood;
+  border: 2px solid black;
+  cursor: pointer;
+  margin: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.genButton:active {
+  transform: scale(0.95);
+}
+
+.dark {
+  background-color: darkgreen;
+}
+
+.light {
+  background-color: aliceblue;
+}
