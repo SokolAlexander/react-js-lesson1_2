@@ -60,6 +60,15 @@ export default function App() {
     { text: "message1", author: "me" },
     { text: "message2", author: "me" },
   ]);
+  const [messages2, setMessages2] = useState({
+    'id1' : { text: "message1", author: "me" },
+    'id2': { text: "message2", author: "me" },
+  });
+
+  const addMessage = useCallback((newid) => {
+    setMessages2(oldMessages => ({...oldMessages, [newid]: {text: '', author: ''}}));
+  }, []); 
+
   const [show, setShow] = useState(false);
 
   const renderMessage = useCallback((message, i) => {

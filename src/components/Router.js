@@ -37,6 +37,9 @@ export default function Routes() {
             <Route exact path="/">
               <App />
             </Route>
+            <Route>
+              <div>No such page</div>
+            </Route>
           </Switch>
         </div>
       </Router>
