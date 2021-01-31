@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link, useParams } from "react-router-dom";
 
 import App from "./app";
 import About from "./about";
@@ -10,7 +10,6 @@ export default function Routes() {
   return (
     <>
       <Router>
-        <header>HEADER</header>
         <div>
           <ul>
             <li>

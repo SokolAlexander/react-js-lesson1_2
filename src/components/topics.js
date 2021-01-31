@@ -7,6 +7,7 @@ import {
   Link
 } from "react-router-dom";
 
+import Header from "./header";
 import Topic from './topic';
 
 const topics = ['one', '2', 'smth', 'qwe'];
@@ -33,6 +34,7 @@ export default function Topics() {
       {newtopics.map(renderTopic)}
       <Switch>
         <Route path={`${match.path}/:topicId`}>
+          <Header />
           <Topic topics={newtopics} />
         </Route>
         <Route path={match.path}>
