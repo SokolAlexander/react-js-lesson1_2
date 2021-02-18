@@ -1,10 +1,12 @@
 import React, { useEffect, useState, useCallback } from "react";
 
 // import { Button } from "@material-ui/core";
-import Message from "./message";
-import Input from "./input";
-import Button from './button';
+import MessageField from "./MessageField";
+import EmptyField from "./EmptyField";
+import Header from "./header";
+import ChatList from "./ChatList";
 import "./app.scss";
+import { Switch, Route, useRouteMatch } from "react-router-dom";
 
 // function Button(props) {
 //   return (
@@ -55,66 +57,90 @@ import "./app.scss";
 //   }
 // }
 
-export default function App() {
-  const [messages, setMessages] = useState([
-    { text: "message1", author: "me" },
-    { text: "message2", author: "me" },
-  ]);
-  const [messages2, setMessages2] = useState({
-    'id1' : { text: "message1", author: "me" },
-    'id2': { text: "message2", author: "me" },
-  });
+// export default function App() {
+//   const [messages, setMessages] = useState([
+//     { text: "message1", author: "me" },
+//     { text: "message2", author: "me" },
+//   ]);
+//   const [messages2, setMessages2] = useState({
+//     'id1' : { text: "message1", author: "me" },
+//     'id2': { text: "message2", author: "me" },
+//   });
 
-  const addMessage = useCallback((newid) => {
-    setMessages2(oldMessages => ({...oldMessages, [newid]: {text: '', author: ''}}));
-  }, []); 
+//   const addMessage = useCallback((newid) => {
+//     setMessages2(oldMessages => ({...oldMessages, [newid]: {text: '', author: ''}}));
+//   }, []); 
 
-  const [show, setShow] = useState(false);
+//   const [show, setShow] = useState(false);
 
-  const renderMessage = useCallback((message, i) => {
-    return <Message message={message} key={i} />;
-  }, []);
+//   const renderMessage = useCallback((message, i) => {
+//     return <Message message={message} key={i} />;
+//   }, []);
 
-  const changeShow = useCallback(() => {
-    setShow(show => !show);
-  }, []);
+//   const changeShow = useCallback(() => {
+//     setShow(show => !show);
+//   }, []);
 
-  const handleAddMessage = useCallback((text, author = "me") => {
-    setMessages((oldMessages) => [...oldMessages, { text, author }]);
-  }, []);
+//   const handleAddMessage = useCallback((text, author = "me") => {
+//     setMessages((oldMessages) => [...oldMessages, { text, author }]);
+//   }, []);
 
-  useEffect(() => {
-    let timeout;
-    if (messages[messages.length - 1].author !== "robot") {
-      timeout = setTimeout(() => {
-        handleAddMessage("some answer", "robot");
-      }, 1500);
-    }
+//   useEffect(() => {
+//     let timeout;
+//     if (messages[messages.length - 1].author !== "robot") {
+//       timeout = setTimeout(() => {
+//         handleAddMessage("some answer", "robot");
+//       }, 1500);
+//     }
 
-    return () => {
-      clearTimeout(timeout);
-    };
-  }, [messages, handleAddMessage]);
+//     return () => {
+//       clearTimeout(timeout);
+//     };
+//   }, [messages, handleAddMessage]);
+
+//   return (
+//     <>
+//       {show ? <span>Show - true</span> : <div>Show - false</div>}
+//     </>
+//   );
+// }
+
+const initialChats = {
+  id1: {
+    id: "id1",
+    name: "Name1",
+    messages: [
+      { text: "Hi", sender: "me" },
+      { text: "Hello", sender: "Name1" },
+    ],
+  },
+  id2: {
+    id: "id2",
+    name: "Name2",
+    messages: [
+      { text: "Hi2", sender: "me" },
+      { text: "Hello2", sender: "Name2" },
+    ],
+  },
+};
+
+export default function Layout() {
+  const [chatList, setChatList] = useState(initialChats);
+
+  const match = useRouteMatch();
 
   return (
     <>
-      {/* {messages.map(renderMessage)} */}
-      {/* <Input onAddMessage={handleAddMessage} /> */}
-      {show ? <span>Show - true</span> : <div>Show - false</div>}
-      <Button onClick={changeShow}>Default</Button>
-      <Button>
-        <span style={{ fontStyle: "italic" }}>text first</span>
-      </Button>
-      {/* <Button>Text second</Button> */}
-      <Button>
-        <img
-          src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9Ii0xMS41IC0xMC4yMzE3NCAyMyAyMC40NjM0OCI+CiAgPHRpdGxlPlJlYWN0IExvZ288L3RpdGxlPgogIDxjaXJjbGUgY3g9IjAiIGN5PSIwIiByPSIyLjA1IiBmaWxsPSIjNjFkYWZiIi8+CiAgPGcgc3Ryb2tlPSIjNjFkYWZiIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiPgogICAgPGVsbGlwc2Ugcng9IjExIiByeT0iNC4yIi8+CiAgICA8ZWxsaXBzZSByeD0iMTEiIHJ5PSI0LjIiIHRyYW5zZm9ybT0icm90YXRlKDYwKSIvPgogICAgPGVsbGlwc2Ugcng9IjExIiByeT0iNC4yIiB0cmFuc2Zvcm09InJvdGF0ZSgxMjApIi8+CiAgPC9nPgo8L3N2Zz4K"
-          style={{ width: 100, height: 50 }}
-          alt=""
-        />
-      </Button>
-      <Button children={<span>Lalala</span>} />
-      <Button render={(v) => <span>Lalala: {v}</span>} />
+      <ChatList chatList={chatList} url={match.url} />
+      <Switch>
+        <Route path={`/chat/:chatId`}>
+          <Header chatList={chatList} />
+          <MessageField chats={chatList} />
+        </Route>
+        <Route path={`${match.path}/`}>
+          <EmptyField />
+        </Route>
+      </Switch>
     </>
   );
 }
