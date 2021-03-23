@@ -32,23 +32,17 @@ body {
 }
 
 h1 {
-  color: #fff;
+  // color: #fff;
   font-family: "Open Sans", sans-serif;
   font-weight: 800;
   font-size: 4em;
   letter-spacing: -2px;
   text-align: center;
   text-shadow: 1px 2px 1px rgba(0, 0, 0, 0.6);
+}
 
-  &:after {
-    display: block;
-    color: #fff;
-    letter-spacing: 1px;
-    font-family: "Poiret One", sans-serif;
-    content: "React project powered by webpack and babel with support for sass";
-    font-size: 0.4em;
-    text-align: center;
-  }
+.red {
+  color: #FF0000;
 }
 
 .button-line {
