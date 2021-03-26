@@ -4,7 +4,7 @@ import React from "react";
 export default class Child extends React.PureComponent {
   constructor(props) {
     super(props);
-    console.log("ChildConstructor");
+    console.log("Child Constructor");
   }
 
   // static getDerivedStateFromProps(props) {
@@ -13,7 +13,7 @@ export default class Child extends React.PureComponent {
   // }
 
   componentDidMount() {
-    console.log("ChildDidMount");
+    console.log("Child Did Mount");
   }
 
   // shouldComponentUpdate(prevProps) {
@@ -26,15 +26,15 @@ export default class Child extends React.PureComponent {
   // }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log("ChilddidUpdate");
+    console.log("Child didUpdate");
   }
 
   componentWillUnmount() {
-    console.log("ChildwillUnmount");
+    console.log("Child willUnmount");
   }
 
   render() {
-    console.log("Childrender");
+    console.log("Child render");
 
     return (
       <div>
