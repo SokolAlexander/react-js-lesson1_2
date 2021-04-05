@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import { AUTHORS } from "../utils/constants";
-import { TextField, Button } from '@material-ui/core';
+import { TextField, Fab } from '@material-ui/core';
+import SendIcon from '@material-ui/icons/Send';
 
 export default function Input({ onAddMessage }) {
   const [value, setValue] = useState("");
@@ -18,7 +19,9 @@ export default function Input({ onAddMessage }) {
   return (
     <form onSubmit={handleSubmit}>
       <TextField label="Message" value={value} onChange={handleChange} />
-      <input type="submit" />
+      <Fab onClick={handleSubmit} color="primary">
+        <SendIcon />
+      </Fab>
     </form>
   );
 }
