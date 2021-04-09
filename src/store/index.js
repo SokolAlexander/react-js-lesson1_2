@@ -1,36 +1,32 @@
-import { createStore, combineReducers } from "redux";
-// import { persistStore, persistReducer } from "redux-persist";
-// import storage from 'redux-persist/lib/storage' // defaults to localStorage for web
+import { createStore, combineReducers, applyMiddleware } from "redux";
+import thunk from "redux-thunk";
+import { persistStore, persistReducer } from "redux-persist";
+import storage from 'redux-persist/lib/storage' // defaults to localStorage for web
 
 import { profileReducer } from "./profile/reducer";
 import { chatsReducer } from "./chats/reducer";
+import { messagesReducer } from "./messages/reducer";
 
-// const persistConfig = {
-//   key: "root",
-//   storage,
-// };
+const persistConfig = {
+  key: "gb-messenger",
+  storage: storage,
+  blacklist: ['chats'],
+};
 
-// const persistedReducer = persistReducer(persistConfig, profileReducer);
-// export const store = createStore(
-//   persistedReducer,
-//   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-// );
-// export const persistor = persistStore(store);
-
-// ====== combineReducers and devtools ext =====
-export const store = createStore(
+const persistedReducer = persistReducer(
+  persistConfig,
   combineReducers({
     profile: profileReducer,
     chats: chatsReducer,
-  }),
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+    messages: messagesReducer,
+  })
 );
 
-// export const store = createStore(
-//   combineReducers({
-//     profile: profileReducer,
-//     chats: chatsReducer,
-//   })
-// );
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-// store.dispatch({type: 'CHANGE_NAME', payload: 'new name'});
+export const store = createStore(
+  persistedReducer,
+  composeEnhancers(applyMiddleware(thunk))
+);
+
+export const persistor = persistStore(store);

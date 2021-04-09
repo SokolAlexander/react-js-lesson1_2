@@ -5,7 +5,7 @@ import './messagefield.scss';
 
 export const MessageField = ({ messages, onAddMessage }) => (
   <div className="messagefield">
-    {messages.map(({ text, author, id }) => (
+    {messages?.map(({ text, author, id }) => (
       <div key={id}>
         {author}: {text}
       </div>

@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch, connect } from "react-redux";
 
-import { changeName } from "../store/profile/actions";
+import { changeName, changeNamewithTimeout } from "../store/profile/actions";
+import { useHistory } from "react-router-dom";
 
 export const Profile = (props) => {
   console.log(props);
   const [value, setValue] = useState("");
+  const history = useHistory();
   // const name = useSelector((state) => state.profile.name);
 
   // const dispatch = useDispatch();
@@ -13,6 +15,7 @@ export const Profile = (props) => {
   const handleClick = () => {
     // dispatch(changeName(value));
     props.setNewName(value);
+    
     setValue("");
   };
 
@@ -35,7 +38,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-  setNewName: changeName,
+  setNewName: changeNamewithTimeout,
 };
 
 export const ConnectedProfile = connect(mapStateToProps, mapDispatchToProps)(Profile);
