@@ -5,8 +5,11 @@ export const changeName = (newName) => ({
   name: newName,
 });
 
-export const changeNamewithTimeout = (newName) => (dispatch, getState) => {
+export const changeNamewithTimeout = (newName) => async (dispatch, getState) => {
   console.log('hello thunk');
+  const res = await fetch('https://api.github.com/gists/public');
+  const re = await res.json();
+  console.log(re);
 
   setTimeout(() => {
     dispatch(changeName(newName))

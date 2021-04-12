@@ -5,6 +5,7 @@ import { Home } from "./home";
 import { ChatList } from "./chatList";
 import { Profile, ConnectedProfile } from "./profile";
 import { Header } from "./header";
+import { GistsList } from "./gists";
 
 export const Routes = () => (
   <BrowserRouter>
@@ -15,6 +16,9 @@ export const Routes = () => (
       </li>
       <li>
         <Link to="/profile">Profile</Link>
+      </li>
+      <li>
+        <Link to="/gists">Gists</Link>
       </li>
     </ul>
     <ChatList />
@@ -27,6 +31,9 @@ export const Routes = () => (
       </Route>
       <Route path="/profile">
         <ConnectedProfile />
+      </Route>
+      <Route path="/gists">
+        <GistsList />
       </Route>
     </Switch>
   </BrowserRouter>

@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { Routes } from "./components/routes";
 import { App } from "./App";
 
+import "regenerator-runtime/runtime.js";
 
 ReactDOM.render(<App />, document.getElementById("app"));

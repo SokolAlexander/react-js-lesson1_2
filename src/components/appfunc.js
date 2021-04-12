@@ -16,7 +16,7 @@ import { MessageField } from "./messagefield";
 import { Switch } from "../../../gbreact/node_modules/@material-ui/core";
 import { useSelector, useDispatch } from "react-redux";
 import { selectMessages } from "../store/messages/selectors";
-import { addMessage } from "../store/messages/actions";
+import { addMessage, addMessageWithBot } from "../store/messages/actions";
 
 // const initalMessages = [
 //   { text: "Hello", author: AUTHORS.ME, id: "1" },
@@ -45,7 +45,7 @@ export const App = ({ goal, name }) => {
       //   ],
       // }));
       dispatch(
-        addMessage(chatId, {
+        addMessageWithBot(chatId, {
           ...newMessage,
           id: `${chatId}-${(messages[chatId]?.length || 0) + 1}`,
         })
@@ -54,19 +54,19 @@ export const App = ({ goal, name }) => {
     [chatId, dispatch, messages]
   );
 
-  useEffect(() => {
-    const lastMessage = messages[chatId]?.[messages[chatId]?.length - 1];
-    let timeout;
-    if (lastMessage?.author === AUTHORS.ME) {
-      timeout = setTimeout(() => {
-        addNewMessage({
-          text: "Hi, i am bot",
-          author: AUTHORS.BOT,
-        });
-      }, 2000);
-    }
-    return () => clearTimeout(timeout);
-  }, [messages]);
+  // useEffect(() => {
+  //   const lastMessage = messages[chatId]?.[messages[chatId]?.length - 1];
+  //   let timeout;
+  //   if (lastMessage?.author === AUTHORS.ME) {
+  //     timeout = setTimeout(() => {
+  //       addNewMessage({
+  //         text: "Hi, i am bot",
+  //         author: AUTHORS.BOT,
+  //       });
+  //     }, 2000);
+  //   }
+  //   return () => clearTimeout(timeout);
+  // }, [messages]);
 
   return (
     <>
