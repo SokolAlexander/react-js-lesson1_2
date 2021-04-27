@@ -130,54 +130,55 @@ const Child = ({ childName, goal }) => {
   )
 }
 
-// const App = ({ goal, name }) => {
-//   const className = "red";
-//   const [counter, setCounter] = useState(0);
+const App = ({ goal, name }) => {
+  const className = "red";
+  const [counter, setCounter] = useState(0);
 
-//   const increase = () => {
-//     setCounter(counter + 1);
+  const increase = () => {
+    debugger
+    setCounter(counter + 1);
+  }
+
+
+  return (
+    <>
+      <h1 className={`${className} second-class`} style={{ top: "25px", color: "wheat" }}>
+        Hello React
+      </h1>
+      <h2>{counter}</h2>
+      <button onClick={increase}>Increase</button>
+      <Child childName="child" goal={goal} />
+    </>
+  );
+};
+
+// class App extends React.Component {
+//   state = {
+//     counter: 0,
 //   }
 
+//   increase = () => {
+//     this.setState(prevState => ({
+//       counter: prevState.counter + 1
+//     }));
+//   }
 
-//   return (
-//     <>
-//       <h1 className={`${className} second-class`} style={{ top: "25px", color: "wheat" }}>
-//         Hello React
-//       </h1>
-//       <h2>{counter}</h2>
-//       <button onClick={increase}>Increase</button>
-//       <Child childName="child" goal={goal} />
-//     </>
-//   );
-// };
+//   render() {
+//     const { goal } = this.props;
+//     const { counter } = this.state;
 
-class App extends React.Component {
-  state = {
-    counter: 0,
-  }
-
-  increase = () => {
-    this.setState(prevState => ({
-      counter: prevState.counter + 1
-    }));
-  }
-
-  render() {
-    const { goal } = this.props;
-    const { counter } = this.state;
-
-    return (
-      <>
-        <h1 className='red' style={{ top: "25px", color: "wheat" }}>
-          Hello React
-        </h1>
-        <h2>{counter}</h2>
-        <button onClick={this.increase}>Increase</button>
-        <Child childName="child" goal={goal} />
-      </>
-    );
-  }
-}
+//     return (
+//       <>
+//         <h1 className='red' style={{ top: "25px", color: "wheat" }}>
+//           Hello React
+//         </h1>
+//         <h2>{counter}</h2>
+//         <button onClick={this.increase}>Increase</button>
+//         <Child childName="child" goal={goal} />
+//       </>
+//     );
+//   }
+// }
 
 export default App;
 
